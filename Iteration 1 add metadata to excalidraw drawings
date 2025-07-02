@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll to Section Example</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- D3.js library for potential SVG manipulation (as requested) -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Custom styles for the document body and sections */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f2f5; /* Light background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 150vh; /* Make the page long enough to scroll */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .section-container {
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 40px; /* Space between sections */
+            padding: 30px;
+            background-color: #ffffff; /* White background for sections */
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            text-align: center;
+        }
+
+        .section-header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #334155; /* Darker text for headers */
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4b5563; /* Slightly lighter text for content */
+        }
+
+        .jump-button {
+            background-image: linear-gradient(to right, #6366f1, #8b5cf6); /* Gradient background */
+            color: white;
+            font-weight: bold;
+            padding: 12px 28px;
+            border-radius: 9999px; /* Pill-shaped button */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4); /* Button shadow */
+            margin-top: 20px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .jump-button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.6); /* Enhanced shadow on hover */
+        }
+
+        /* Adjustments for demonstration purposes to ensure content extends past viewport */
+        .large-gap {
+            height: 70vh; /* Create a large empty space for scrolling effect */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #94a3b8;
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-4xl font-extrabold text-gray-800 my-8">Interactive Document Navigation</h1>
+
+    <!-- Button to jump to Section Two -->
+    <button id="jumpToSectionTwoBtn" class="jump-button">Jump to Section Two</button>
+
+    <!-- Button to jump to Section Three -->
+    <button id="jumpToSectionThreeBtn" class="jump-button ml-4">Jump to Section Three</button>
+
+    <!-- Section One -->
+    <div id="sectionOne" class="section-container">
+        <h2 class="section-header">Section One: Introduction</h2>
+        <p class="section-content">
+            This is the first section of our document. It provides an overview of the content.
+            We can add more detailed information here to fill up space and make the scrolling more apparent.
+            Imagine this as your initial view when the page loads.
+        </p>
+        <p class="section-content mt-4">
+            The buttons above will allow you to quickly navigate to other parts of this page,
+            demonstrating a smooth scrolling effect.
+        </p>
+    </div>
+
+    <!-- A large gap to ensure scrolling is visible -->
+    <div class="large-gap">
+        Scroll down or use the buttons above!
+    </div>
+
+    <!-- Section Two -->
+    <div id="sectionTwo" class="section-container">
+        <h2 class="section-header">Section Two: Key Concepts</h2>
+        <p class="section-content">
+            This section delves into the core concepts and ideas. It's often where the bulk of
+            your detailed explanations and examples would reside. We've made this section
+            a target for one of our jump buttons.
+        </p>
+        <p class="section-content mt-4">
+            You can imagine this section being linked from various parts of your Excalidraw diagram,
+            where clicking on a specific diagram element would bring you here.
+        </p>
+    </div>
+
+    <!-- Another large gap -->
+    <div class="large-gap">
+        More content below...
+    </div>
+
+    <!-- Section Three -->
+    <div id="sectionThree" class="section-container">
+        <h2 class="section-header">Section Three: Conclusion and Next Steps</h2>
+        <p class="section-content">
+            This final section provides a summary of the discussed topics and outlines potential
+            next steps or further reading. It's another jump target, demonstrating navigation
+            to a later part of the document.
+        </p>
+        <p class="section-content mt-4">
+            This setup shows how you can link visual elements (like those in Excalidraw) to
+            specific textual content sections within your published document.
+        </p>
+    </div>
+
+    <script>
+        // Ensure the DOM is fully loaded before trying to access elements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to the buttons
+            const jumpToSectionTwoBtn = document.getElementById('jumpToSectionTwoBtn');
+            const jumpToSectionThreeBtn = document.getElementById('jumpToSectionThreeBtn');
+
+            // Add click event listener to the "Jump to Section Two" button
+            if (jumpToSectionTwoBtn) {
+                jumpToSectionTwoBtn.addEventListener('click', () => {
+                    const targetSection = document.getElementById('sectionTwo');
+                    if (targetSection) {
+                        // Scroll smoothly into view
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        console.error('Target section "sectionTwo" not found.');
+                    }
+                });
+            }
+
+            // Add click event listener to the "Jump to Section Three" button
+            if (jumpToSectionThreeBtn) {
+                jumpToSectionThreeBtn.addEventListener('click', () => {
+                    const targetSection = document.getElementById('sectionThree');
+                    if (targetSection) {
+                        // Scroll smoothly into view
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        console.error('Target section "sectionThree" not found.');
+                    }
+                });
+            }
+
+            // --- D3.js Example (Minimal for demonstration) ---
+            // While D3.js isn't strictly necessary for the simple scroll functionality,
+            // you mentioned it for Excalidraw SVG metadata.
+            // Here's a very basic example of D3 selecting an element, just to show it's loaded.
+            // In a more advanced scenario, D3 would be used to:
+            // 1. Load and parse the Excalidraw SVG.
+            // 2. Extract bounding box information or custom data attributes from SVG elements.
+            // 3. Dynamically create jump buttons or map SVG element clicks to scroll actions.
+
+            try {
+                // Select the body element using D3
+                const bodySelection = d3.select("body");
+                console.log("D3.js has successfully selected the body element:", bodySelection.node());
+
+                // Example of how you might select an SVG element if one were present
+                // and then perhaps attach a click handler to it that scrolls.
+                // d3.select("#mySvgElementInExcalidraw").on("click", function() {
+                //     document.getElementById("targetSection").scrollIntoView({ behavior: 'smooth' });
+                // });
+
+            } catch (error) {
+                console.error("Error using D3.js:", error);
+            }
+        });
+    </script>
+</body>
+</html>
